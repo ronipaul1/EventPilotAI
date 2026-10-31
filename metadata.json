@@ -1,0 +1,6 @@
+{
+  "name": "EventPilot AI",
+  "description": "Production GenAI-powered event planning platform for weddings, birthdays, and community celebrations with intelligent timelines, budget tracking, vendor management, and assistant.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

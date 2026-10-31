@@ -1,0 +1,227 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile document",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 256 },
+        "displayName": { "type": "string", "maxLength": 128 },
+        "photoURL": { "type": "string", "maxLength": 512 },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Event": {
+      "title": "Event",
+      "description": "An organized event such as a wedding, birthday, or community gathering",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 150 },
+        "category": { "type": "string", "enum": ["wedding", "birthday", "community", "other"] },
+        "eventDate": { "type": "string", "maxLength": 32 },
+        "location": { "type": "string", "maxLength": 200 },
+        "guestCount": { "type": "number" },
+        "totalBudget": { "type": "number" },
+        "currency": { "type": "string", "maxLength": 8 },
+        "durationHours": { "type": "number" },
+        "theme": { "type": "string", "maxLength": 150 },
+        "dietaryRequirements": { "type": "string", "maxLength": 500 },
+        "accessibilityRequirements": { "type": "string", "maxLength": 500 },
+        "additionalNotes": { "type": "string", "maxLength": 1000 },
+        "status": { "type": "string", "enum": ["planning", "confirmed", "completed", "archived"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "name", "category", "eventDate", "totalBudget", "currency"]
+    },
+    "Guest": {
+      "title": "Guest",
+      "description": "Guest invitation and RSVP record for an event",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "eventId": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 120 },
+        "email": { "type": "string", "maxLength": 150 },
+        "phone": { "type": "string", "maxLength": 50 },
+        "group": { "type": "string", "enum": ["family", "friend", "colleague", "vip", "general"] },
+        "rsvpStatus": { "type": "string", "enum": ["attending", "declined", "pending", "tentative"] },
+        "plusOnes": { "type": "number" },
+        "dietaryRequirements": { "type": "string", "maxLength": 200 },
+        "tableNumber": { "type": "string", "maxLength": 50 },
+        "ticketCode": { "type": "string", "maxLength": 64 },
+        "checkInStatus": { "type": "string", "enum": ["not_checked_in", "checked_in"] },
+        "checkInTime": { "type": "string", "maxLength": 64 },
+        "notes": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "eventId", "userId", "name", "rsvpStatus"]
+    },
+    "Expense": {
+      "title": "Expense",
+      "description": "Financial expenditure item associated with an event",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "eventId": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "category": {
+          "type": "string",
+          "enum": ["Venue", "Catering", "Decoration", "Photography", "Entertainment", "Transportation", "Clothing", "Invitations", "Miscellaneous"]
+        },
+        "description": { "type": "string", "maxLength": 200 },
+        "amount": { "type": "number" },
+        "plannedAmount": { "type": "number" },
+        "date": { "type": "string", "maxLength": 32 },
+        "paidStatus": { "type": "string", "enum": ["unpaid", "deposit_paid", "paid"] },
+        "notes": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "eventId", "userId", "category", "description", "amount", "paidStatus"]
+    },
+    "Vendor": {
+      "title": "Vendor",
+      "description": "Third-party vendor or service provider record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "eventId": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 120 },
+        "category": { "type": "string", "maxLength": 80 },
+        "contactPerson": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "maxLength": 150 },
+        "phone": { "type": "string", "maxLength": 50 },
+        "estimatedCost": { "type": "number" },
+        "actualCost": { "type": "number" },
+        "bookingStatus": {
+          "type": "string",
+          "enum": ["Not Contacted", "Contacted", "Negotiating", "Confirmed", "Cancelled"]
+        },
+        "notes": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "eventId", "userId", "name", "category", "bookingStatus"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "Smart checklist action item for an event",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "eventId": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 200 },
+        "description": { "type": "string", "maxLength": 500 },
+        "category": { "type": "string", "maxLength": 80 },
+        "priority": { "type": "string", "enum": ["low", "medium", "high", "urgent"] },
+        "dueDate": { "type": "string", "maxLength": 32 },
+        "isCompleted": { "type": "boolean" },
+        "source": { "type": "string", "enum": ["ai", "custom"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "eventId", "userId", "title", "priority", "isCompleted"]
+    },
+    "Timeline": {
+      "title": "Timeline",
+      "description": "Chronological milestone or day-of schedule slot",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "eventId": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "type": { "type": "string", "enum": ["milestone", "day_of"] },
+        "title": { "type": "string", "maxLength": 150 },
+        "description": { "type": "string", "maxLength": 500 },
+        "startTime": { "type": "string", "maxLength": 32 },
+        "endTime": { "type": "string", "maxLength": 32 },
+        "date": { "type": "string", "maxLength": 32 },
+        "priority": { "type": "string", "enum": ["low", "medium", "high"] },
+        "status": { "type": "string", "enum": ["pending", "in_progress", "completed", "delayed"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "eventId", "userId", "type", "title", "status"]
+    },
+    "AiPlan": {
+      "title": "AiPlan",
+      "description": "Generated AI comprehensive event blueprint cache",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "eventId": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "overview": { "type": "string", "maxLength": 2000 },
+        "recommendations": { "type": "string", "maxLength": 3000 },
+        "decorationIdeas": { "type": "string", "maxLength": 2000 },
+        "cateringSuggestions": { "type": "string", "maxLength": 2000 },
+        "guestManagement": { "type": "string", "maxLength": 2000 },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "eventId", "userId", "overview"]
+    },
+    "AiConversation": {
+      "title": "AiConversation",
+      "description": "Conversational assistant chat log message",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "eventId": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "role": { "type": "string", "enum": ["user", "assistant", "system"] },
+        "content": { "type": "string", "maxLength": 4000 },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "eventId", "userId", "role", "content"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile collection isolated to the owner"
+    },
+    "/events/{eventId}": {
+      "schema": "Event",
+      "description": "Primary event documents owned by individual users"
+    },
+    "/guests/{guestId}": {
+      "schema": "Guest",
+      "description": "Event attendee invitations and RSVP tracker"
+    },
+    "/expenses/{expenseId}": {
+      "schema": "Expense",
+      "description": "Budget expense line items associated with an event"
+    },
+    "/vendors/{vendorId}": {
+      "schema": "Vendor",
+      "description": "Vendor coordination records for an event"
+    },
+    "/tasks/{taskId}": {
+      "schema": "Task",
+      "description": "Smart checklist tasks for an event"
+    },
+    "/timelines/{timelineId}": {
+      "schema": "Timeline",
+      "description": "Event milestones and day-of schedules"
+    },
+    "/aiPlans/{planId}": {
+      "schema": "AiPlan",
+      "description": "Generated AI comprehensive event blueprint cache"
+    },
+    "/aiConversations/{conversationId}": {
+      "schema": "AiConversation",
+      "description": "Conversational assistant message history"
+    }
+  }
+}
